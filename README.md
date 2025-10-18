@@ -5,6 +5,10 @@
 git clone <repository-url>
 cd <project-folder>
 
+GO PROJECT FOLDER and RUN BELLOW COMMAND
+
+#1st run backend then run frontend
+
 ```bash
 ### Build development image
 docker compose build --no-cache

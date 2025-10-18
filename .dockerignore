@@ -3,3 +3,11 @@ npm-debug.log
 dist
 .env.local
 .git
+.gitignore
+README.md
+.vscode
+.idea
+*.swp
+*.swo
+*~
+.DS_Store
