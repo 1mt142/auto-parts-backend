@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: auto_parts_db
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: auto_parts
+      MYSQL_USER: auto_parts_user
+      MYSQL_PASSWORD: auto_parts_pass
+    ports:
+      - '3306:3306'
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ['CMD', 'mysqladmin', 'ping', '-h', 'localhost']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - app-network
+
+  backend:
+    build: .
+    container_name: auto_parts_api
+    environment:
+      NODE_ENV: development
+      PORT: 4000
+      DATABASE_URL: mysql://auto_parts_user:auto_parts_pass@db:3306/auto_parts
+      JWT_SECRET: super_secret_key_min_32_characters_long_12345
+      JWT_REFRESH_SECRET: refresh_secret_key_min_32_chars_long_12345
+      JWT_EXPIRE: ${JWT_EXPIRE}
+      JWT_REFRESH_EXPIRE: ${JWT_REFRESH_EXPIRE}
+      LOG_LEVEL: info
+      CLOUDINARY_NAME: ${CLOUDINARY_NAME}
+      CLOUDINARY_API_KEY: ${CLOUDINARY_API_KEY}
+      CLOUDINARY_API_SECRET: ${CLOUDINARY_API_SECRET}
+    ports:
+      - '4000:4000'
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/dist
+    command: npm run dev
+    networks:
+      - app-network
+
+volumes:
+  mysql_data:
+
+networks:
+  app-network:
+    driver: bridge
