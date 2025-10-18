@@ -2,8 +2,8 @@
 
 ### How to Run
 
-git clone <repository-url>
-cd <project-folder>
+git clone Project
+cd Project
 
 Create a .env file and copy the contents from .env.example into it.
 
