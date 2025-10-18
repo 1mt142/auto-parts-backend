@@ -5,6 +5,8 @@
 git clone <repository-url>
 cd <project-folder>
 
+Create a .env file and copy the contents from .env.example into it.
+
 GO PROJECT FOLDER and RUN BELLOW COMMAND
 
 #1st run backend then run frontend
