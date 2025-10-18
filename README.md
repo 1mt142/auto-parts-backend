@@ -21,6 +21,9 @@ docker-compose up -d
 ### Run migrations manually
 docker exec auto_parts_api npx prisma migrate deploy
 
+# Stop all services
+docker-compose down
+
 ### View logs
 docker logs -f auto_parts_api
 
